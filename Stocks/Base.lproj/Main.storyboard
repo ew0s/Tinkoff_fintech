@@ -29,9 +29,6 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Vv-5I-Tah">
-                                <rect key="frame" x="0.0" y="593" width="414" height="269"/>
-                            </pickerView>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="ERe-uX-UoY">
                                 <rect key="frame" x="197" y="438" width="20" height="20"/>
                             </activityIndicatorView>
@@ -71,6 +68,9 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Vv-5I-Tah">
+                                <rect key="frame" x="0.0" y="593" width="414" height="269"/>
+                            </pickerView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

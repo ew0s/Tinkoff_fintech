@@ -103,6 +103,7 @@ class ViewController: UIViewController, UIPickerViewDelegate {
     
     private func requestQuoteUpdate() {
         activityIndicator.startAnimating()
+        companyNameLabel.textColor = UIColor.black
         companyNameLabel.text = "-"
         
         let selectedRow = companyPickerView.selectedRow(inComponent: 0)
