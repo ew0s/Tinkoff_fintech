@@ -43,7 +43,9 @@ class ViewController: UIViewController, UIPickerViewDelegate {
         "Microsoft": "MSFT",
         "Google": "GOOG",
         "Amazon": "AMZN",
-        "Facebook": "FB"
+        "Facebook": "FB",
+        "Novavax, Inc.": "NVAX",
+        "Koss Corp.": "KOSS"
     ]
     
     // MARK: - Quote processing
