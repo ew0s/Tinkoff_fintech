@@ -46,12 +46,14 @@ class ViewController: UIViewController, UIPickerViewDelegate {
         "Facebook": "FB"
     ]
     
+    // MARK: - Quote processing
+    
     private func requestQuote(for symbol: String) {
         let token = "pk_eda69de6d62b4617b246a659033cb227"
         guard let url = URL(string: "https://cloud.iexapis.com/stable/stock/\(symbol)/quote?token=\(token)") else {
             return
         }
-        
+
         let dataTask = URLSession.shared.dataTask(with: url) { [weak self] (data, response, error) in
             if let data = data,
                (response as? HTTPURLResponse)?.statusCode == 200,
@@ -88,6 +90,19 @@ class ViewController: UIViewController, UIPickerViewDelegate {
         }
     }
     
+    private func requestQuoteUpdate() {
+        activityIndicator.startAnimating()
+        companyNameLabel.textColor = UIColor.black
+        companyNameLabel.text = "-"
+        
+        let selectedRow = companyPickerView.selectedRow(inComponent: 0)
+        let selectedSymbol = Array(commpanies.values)[selectedRow]
+        requestQuote(for: selectedSymbol)
+        requestCompanyImage(symbol: selectedSymbol)
+    }
+    
+    // MARK: - Display info
+    
     private func displayStockInfo(companyName: String,
                                   companySymbol: String,
                                   price: Double,
@@ -99,18 +114,7 @@ class ViewController: UIViewController, UIPickerViewDelegate {
         priceChangeLabel.text = "\(priceChange)"
         updatePriceColor(priceChange: priceChange)
     }
-    
-    private func requestQuoteUpdate() {
-        activityIndicator.startAnimating()
-        companyNameLabel.textColor = UIColor.black
-        companyNameLabel.text = "-"
-        
-        let selectedRow = companyPickerView.selectedRow(inComponent: 0)
-        let selectedSymbol = Array(commpanies.values)[selectedRow]
-        requestQuote(for: selectedSymbol)
-        updateCompanyImage(symbol: selectedSymbol)
-    }
-    
+
     private func updatePriceColor(priceChange: Double) {
         if (priceChange > 0) {
             priceChangeLabel.textColor = UIColor.green
@@ -123,7 +127,9 @@ class ViewController: UIViewController, UIPickerViewDelegate {
         }
     }
     
-    private func updateCompanyImage(symbol: String) {
+    // MARK: - Company image processing
+    
+    private func requestCompanyImage(symbol: String) {
         let token = "pk_eda69de6d62b4617b246a659033cb227"
         guard let url = URL(string: "https://cloud.iexapis.com/stable/stock/\(symbol)/logo?token=\(token)") else {
             return
@@ -133,7 +139,7 @@ class ViewController: UIViewController, UIPickerViewDelegate {
             if let data = data,
                (response as? HTTPURLResponse)?.statusCode == 200,
                error == nil {
-                self?.parseImageQuote(from: data)
+                self?.parseImage(from: data)
             } else {
                 print("Network error!")
             }
@@ -142,14 +148,7 @@ class ViewController: UIViewController, UIPickerViewDelegate {
         dataTask.resume()
     }
     
-    private func setCompanyIconImage(url: String) {
-        let imgUrl = NSURL(string: url)
-        if let data = NSData(contentsOf: imgUrl! as URL) {
-            companyIconImage.image = UIImage(data: data as Data)
-        }
-    }
-    
-    private func parseImageQuote(from data: Data) {
+    private func parseImage(from data: Data) {
         do {
             let jsonObject = try JSONSerialization.jsonObject(with: data)
             
@@ -163,6 +162,13 @@ class ViewController: UIViewController, UIPickerViewDelegate {
             }
         } catch {
             print("JSON paring error: " + error.localizedDescription)
+        }
+    }
+    
+    private func setCompanyIconImage(url: String) {
+        let imgUrl = NSURL(string: url)
+        if let data = NSData(contentsOf: imgUrl! as URL) {
+            companyIconImage.image = UIImage(data: data as Data)
         }
     }
 }
