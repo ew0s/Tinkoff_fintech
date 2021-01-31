@@ -17,6 +17,7 @@ class ViewController: UIViewController, UIPickerViewDelegate {
     @IBOutlet weak var companySymbolLabel: UILabel!
     @IBOutlet weak var priceLabel: UILabel!
     @IBOutlet weak var priceChangeLabel: UILabel!
+    @IBOutlet weak var companyIconImage: UIImageView!
     
     // MARK: - LifeCycle
     
@@ -75,8 +76,6 @@ class ViewController: UIViewController, UIPickerViewDelegate {
                 let price = json["latestPrice"] as? Double,
                 let priceChange = json["change"] as? Double else { return print("Invalid JSON") }
             
-            
-            
                 
             DispatchQueue.main.async { [weak self] in
                 self?.displayStockInfo(companyName: companyName,
@@ -109,6 +108,7 @@ class ViewController: UIViewController, UIPickerViewDelegate {
         let selectedRow = companyPickerView.selectedRow(inComponent: 0)
         let selectedSymbol = Array(commpanies.values)[selectedRow]
         requestQuote(for: selectedSymbol)
+        updateCompanyImage(symbol: selectedSymbol)
     }
     
     private func updatePriceColor(priceChange: Double) {
@@ -120,6 +120,49 @@ class ViewController: UIViewController, UIPickerViewDelegate {
         }
         else {
             priceChangeLabel.textColor = UIColor.black
+        }
+    }
+    
+    private func updateCompanyImage(symbol: String) {
+        let token = "pk_eda69de6d62b4617b246a659033cb227"
+        guard let url = URL(string: "https://cloud.iexapis.com/stable/stock/\(symbol)/logo?token=\(token)") else {
+            return
+        }
+        
+        let dataTask = URLSession.shared.dataTask(with: url) { [weak self] (data, response, error) in
+            if let data = data,
+               (response as? HTTPURLResponse)?.statusCode == 200,
+               error == nil {
+                self?.parseImageQuote(from: data)
+            } else {
+                print("Network error!")
+            }
+        }
+        
+        dataTask.resume()
+    }
+    
+    private func setCompanyIconImage(url: String) {
+        let imgUrl = NSURL(string: url)
+        if let data = NSData(contentsOf: imgUrl! as URL) {
+            companyIconImage.image = UIImage(data: data as Data)
+        }
+    }
+    
+    private func parseImageQuote(from data: Data) {
+        do {
+            let jsonObject = try JSONSerialization.jsonObject(with: data)
+            
+            guard
+                let json = jsonObject as? [String: Any],
+                let imgUrl = json["url"] as? String else { return print("Invalid JSON") }
+            
+                
+            DispatchQueue.main.async { [weak self] in
+                self?.setCompanyIconImage(url: imgUrl)
+            }
+        } catch {
+            print("JSON paring error: " + error.localizedDescription)
         }
     }
 }
