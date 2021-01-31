@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import QuartzCore
 
 class ViewController: UIViewController, UIPickerViewDelegate {
 
@@ -62,7 +63,7 @@ class ViewController: UIViewController, UIPickerViewDelegate {
                error == nil {
                 self?.parseQuote(from: data)
             } else {
-                print("Network error!")
+                self?.showAlert(title: "Network error", message: "check connection")
             }
         }
         
@@ -88,14 +89,19 @@ class ViewController: UIViewController, UIPickerViewDelegate {
                                        priceChange: priceChange)
             }
         } catch {
-            print("JSON paring error: " + error.localizedDescription)
+            showAlert(title: "JSON paring error", message: error.localizedDescription)
         }
     }
     
     private func requestQuoteUpdate() {
         activityIndicator.startAnimating()
         companyNameLabel.textColor = UIColor.black
+        
         companyNameLabel.text = "-"
+        companySymbolLabel.text = "-"
+        priceLabel.text = "-"
+        priceChangeLabel.text = "-"
+        companyIconImage.image = nil
         
         let selectedRow = companyPickerView.selectedRow(inComponent: 0)
         let selectedSymbol = Array(commpanies.values)[selectedRow]
@@ -143,7 +149,7 @@ class ViewController: UIViewController, UIPickerViewDelegate {
                error == nil {
                 self?.parseImage(from: data)
             } else {
-                print("Network error!")
+                self?.showAlert(title: "Network error", message: "check connection")
             }
         }
         
@@ -163,7 +169,7 @@ class ViewController: UIViewController, UIPickerViewDelegate {
                 self?.setCompanyIconImage(url: imgUrl)
             }
         } catch {
-            print("JSON paring error: " + error.localizedDescription)
+            showAlert(title: "JSON paring error", message: error.localizedDescription)
         }
     }
     
@@ -171,6 +177,19 @@ class ViewController: UIViewController, UIPickerViewDelegate {
         let imgUrl = NSURL(string: url)
         if let data = NSData(contentsOf: imgUrl! as URL) {
             companyIconImage.image = UIImage(data: data as Data)
+        }
+    }
+    
+    // MARK: - Exceptions handler
+    
+    private func showAlert(title: String, message: String) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let action = UIAlertAction(title: "ok", style: .default)
+        
+        alertController.addAction(action)
+        
+        DispatchQueue.main.async { [weak self] in
+            self?.present(alertController, animated: true, completion: nil)
         }
     }
 }

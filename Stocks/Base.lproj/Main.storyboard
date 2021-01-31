@@ -28,6 +28,10 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="ERe-uX-UoY">
+                                <rect key="frame" x="354" y="123" width="20" height="20"/>
+                                <color key="color" systemColor="systemYellowColor"/>
+                            </activityIndicatorView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Symbol" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pCz-9T-fb3">
                                 <rect key="frame" x="40" y="285" width="58" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -71,14 +75,18 @@
                                 <rect key="frame" x="20" y="69" width="139" height="129"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="ERe-uX-UoY">
-                                <rect key="frame" x="354" y="123" width="20" height="20"/>
-                                <color key="color" systemColor="systemYellowColor"/>
-                            </activityIndicatorView>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Select company to look up at statistic" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Jlk-Sh-Kz7">
+                                <rect key="frame" x="20" y="572" width="374" height="34"/>
+                                <color key="backgroundColor" red="0.0046099745670000001" green="0.41225248580000001" blue="0.64764243359999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" red="0.021740892899999999" green="0.36770474910000001" blue="0.59612053629999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="3Vv-5I-Tah" firstAttribute="top" secondItem="Jlk-Sh-Kz7" secondAttribute="bottom" constant="40" id="2Ri-yv-UaK"/>
+                            <constraint firstItem="Jlk-Sh-Kz7" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="49N-cy-Si8"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="ERe-uX-UoY" secondAttribute="trailing" constant="40" id="5j9-ZT-WA1"/>
                             <constraint firstItem="3Vv-5I-Tah" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="9lU-Ee-ozI"/>
                             <constraint firstItem="MqM-KE-G28" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="40" id="E38-Wm-zh9"/>
@@ -89,6 +97,7 @@
                             <constraint firstItem="Kzl-FC-CE7" firstAttribute="top" secondItem="pCz-9T-fb3" secondAttribute="bottom" constant="40" id="Qpw-Z1-wsz"/>
                             <constraint firstItem="MqM-KE-G28" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="180" id="S7S-2c-jYD"/>
                             <constraint firstItem="rut-Le-2vV" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="40" id="cee-7g-CMU"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Jlk-Sh-Kz7" secondAttribute="trailing" constant="20" id="dfF-mq-XRS"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Ng7-XF-Qbu" secondAttribute="trailing" constant="40" id="dit-6S-2OM"/>
                             <constraint firstItem="Ng7-XF-Qbu" firstAttribute="top" secondItem="Ndk-mn-lNb" secondAttribute="bottom" constant="40" id="f5d-d7-Gq0"/>
                             <constraint firstItem="2Fc-wY-6dP" firstAttribute="top" secondItem="Ng7-XF-Qbu" secondAttribute="bottom" constant="40" id="gYb-JQ-2Hq"/>
